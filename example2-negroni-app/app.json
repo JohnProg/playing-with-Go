@@ -1,7 +1,7 @@
 {
-  "name": "negroni-example",
-  "description": "A simple Negroni Example",
-  "repository": "https://github.com/adamar/negroni-example",
+  "name": "negroni-orm-example",
+  "description": "A simple Negroni ORM Example",
+  "repository": "https://github.com/JohnProg/playing-with-Go/blob/master/example2-negroni-app/app.json",
   "keywords": ["golang", "negroni", "postgres", "orm"],
   "success_url": "/",
   "addons": [
