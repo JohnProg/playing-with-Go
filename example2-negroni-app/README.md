@@ -1,5 +1,5 @@
-Negroni Example
-===============
+Negroni ORM Example
+===================
 
 This is an example Negroni web app
 
@@ -16,6 +16,7 @@ Features
 * Signup/Login
 * Pages rendered from templates
 * API
+* ORM
 
 
 Requirements
@@ -24,6 +25,7 @@ Requirements
 * Negroni
 * Negroni-sessions
 * Render
+* gorm
 * pq
 
 
@@ -32,5 +34,5 @@ Try Me
 
 Deploy to Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/adamar/negroni-example)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/JohnProg/playing-with-Go/tree/master/example2-negroni-app)
 
