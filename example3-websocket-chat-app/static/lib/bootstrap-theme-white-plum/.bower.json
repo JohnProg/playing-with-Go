@@ -1,0 +1,26 @@
+{
+  "name": "bootstrap-theme-white-plum",
+  "version": "0.3.0",
+  "main": "./dist/css/bootstrap.css",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.0.0"
+  },
+  "homepage": "https://github.com/divshot/bootstrap-theme-white-plum",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.0",
+    "commit": "7452e4bba70187998785788533998697fa42ebbe"
+  },
+  "_source": "git://github.com/divshot/bootstrap-theme-white-plum.git",
+  "_target": "~0.3.0",
+  "_originalSource": "bootstrap-theme-white-plum",
+  "_direct": true
+}

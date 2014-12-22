@@ -1,0 +1,38 @@
+@media (min-width: 768px) {
+  .container {
+    max-width: 660px;
+  }
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.usernamebox.ng-hide-add, .usernamebox.ng-hide-remove {
+  transition:1s linear all;
+  display:block!important;
+}
+
+.usernamebox.ng-hide-add {
+  -webkit-animation: bounceOutDown 1s;
+  -moz-animation: bounceOutDown 1s;
+  -ms-animation: bounceOutDown 1s;
+  animation: bounceOutDown 1s;
+}
+
+.messagebox.ng-hide-add, .messagebox.ng-hide-remove {
+  transition:1s linear all;
+  display:block!important;
+}
+
+.messagebox.ng-hide-remove {
+  -webkit-animation: bounceInDown 1s;
+  -moz-animation: bounceInDown 1s;
+  -ms-animation: bounceInDown 1s;
+  animation: bounceInDown 1s;
+}

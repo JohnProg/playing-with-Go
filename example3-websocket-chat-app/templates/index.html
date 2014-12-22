@@ -1,0 +1,76 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chat ✍</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/static/lib/bootstrap-theme-white-plum/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/lib/animate.css/animate.css" />
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/bubbles.css">
+    <script type="text/javascript" src="//cdn.socket.io/socket.io-1.1.0.js" integrity="ni:///sha-256;4omls-f3OZnoi9yQzyNT9_vPSo8hb-oTnjdwgyUcJV8=?ct=application/javascript"></script>
+  </head>
+  <body ng-app="chatWebApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container" ng-controller="ChatCtrl">
+        <div class="usernamebox panel panel-info" ng-hide="username != false">
+            <div class="panel-body">
+                <form class="form-horizontal" ng-submit="setUsername()">
+                    <label for="username">Username:</label>
+                    <input id="username" class="form-control" ng-model="inputUsername">
+                </form>
+            </div>
+        </div>
+        <div class="messagebox panel panel-default" ng-hide="username == false">
+            <div class="panel-heading">
+                <h1>Chat ✍</h1>
+            </div>
+            <div scroll-glue class="panel-body" style="height: 600px; max-height: 80%; overflow-y: scroll;">
+                <section ng-repeat="message in messages" ng-class="{'pull-right': message.type === 'joined_message'}">
+                    <small class="text-info" ng-show="message.type === 'joined_message'"><i>[<b ng-bind="message.username"></b>]</i> joined </small>
+                    <small class="text-info" am-time-ago="message.dateTime"></small>
+                    <p ng-show="message.type == 'message'">[<label ng-bind="message.username"></label>] <span ng-bind="message.message"></span></p>
+                </section>
+            </div>
+            <div class="panel-footer">
+                <form class="form-horizontal" ng-submit="sendMessage()">
+                    <label for="message">Message:</label>
+                    <input id="message" class="form-control" ng-model="newMessage">
+                </form>
+            </div>
+        </div>
+        <div class="footer" style="text-align: center">
+            <p>made with ♥</p>
+        </div>
+    </div>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/static/lib/angular/angular.js"></script>
+    <script src="/static/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="/static/lib/angular-socket-io/socket.js"></script>
+    <script src="/static/lib/moment/min/moment.min.js"></script>
+    <script src="/static/lib/angular-moment/angular-moment.min.js"></script>
+    <script src="/static/lib/angularjs-scroll-glue/src/scrollglue.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="/static/scripts/app.js"></script>
+        <script src="/static/scripts/controllers/chat.js"></script>
+        <script src="/static/scripts/services/socket.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
