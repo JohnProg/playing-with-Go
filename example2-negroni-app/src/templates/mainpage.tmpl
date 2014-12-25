@@ -1,0 +1,27 @@
+<h1>Employee profile:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Email</th>
+      <th>Job</th>
+      <th>Actions</th>
+     </tr>
+   </thead>
+  <tbody>
+   {{ range . }}
+     <tr>
+       <td>{{.Id}}</td>
+       <td><a href="/persons/{{ .Id }}">{{.UserName}}</a></td>
+       <td>{{.UserName}}</td>
+       <td>{{.UserEmail}}</td>
+       <td><a href="/persons/{{ .Id }}/edit">Edit</a></td>
+       <td><a href="/persons/{{ .Id }}/delete">Delete</a></td>
+     </tr>
+   {{end}}
+  </tbody>
+</table>
+
+<a href="/persons/new">Create new person</a>

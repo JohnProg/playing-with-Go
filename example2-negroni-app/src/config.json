@@ -1,0 +1,11 @@
+{
+    "Domain"      : "localhost",
+    "Database"    : {
+    	"User": "postgres",
+        "Host" : "localhost",
+        "Server": "postgres",
+        "Name" : "pqgotest",
+        "Password": "1234"
+    },
+    "BindAddr"    : "localhost:8080"
+}
