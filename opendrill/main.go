@@ -3,8 +3,6 @@ package main
 import (
 	"./app/models"
 	"./router"
-	"flag"
-	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"gopkg.in/mgo.v2"
 	"log"
@@ -34,9 +32,6 @@ func init() {
 	// session.SetMode(mgo.Monotonic, true)
 	session.SetMode(mgo.Strong, true) // Most similar to Postgres
 	db = session.DB(DATABASE_NAME)
-	// TODO: It doesn't seem like you should have to do this...
-	// Tell other packages which Mongo database to use
-	// helpers.SetDB(db)
 	models.SetDB(db)
 }
 
@@ -50,16 +45,8 @@ func main() {
 	// runtime.GOMAXPROCS(runtime.NumCPU())
 	defer session.Close()
 
-	// command line flags
-	port := flag.Int("port", 8001, "port to serve on")
-	flag.Parse()
-
 	router.Init()
 
-	log.Printf("Running on port %d\n", *port)
-
-	addr := fmt.Sprintf("127.0.0.1:%d", *port)
-	// this call blocks -- the progam runs here forever
-	err := http.ListenAndServe(addr, nil)
-	fmt.Println(err.Error())
+	log.Println("Listening on 8080")
+	http.ListenAndServe(":8080", nil)
 }

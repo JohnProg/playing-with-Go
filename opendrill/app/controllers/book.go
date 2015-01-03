@@ -3,7 +3,7 @@ package controllers
 import (
 	models "../models"
 	"encoding/json"
-	// "github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,28 +14,29 @@ import (
 // var books = make([]models.Book, 0)
 
 func ListBooks(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	books := models.AllBooks()
+	books, _ := models.AllBooks()
 	if books == nil {
 		return []models.Book{}, nil
 	}
 	return books, nil
 }
 
-// func GetBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-// 	// mux.Vars grabs variables from the path
-// 	param := mux.Vars(r)["id"]
-// 	id, e := strconv.Atoi(param)
-// 	if e != nil {
-// 		return nil, &models.HandlerError{e, "Id should be an integer", http.StatusBadRequest}
-// 	}
-// 	b, index := getBookById(id)
+func GetBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
+	// mux.Vars grabs variables from the path
+	Id := mux.Vars(r)["id"]
+	log.Println(Id)
+	if len(Id) != 24 {
+		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
+	}
 
-// 	if index < 0 {
-// 		return nil, &models.HandlerError{nil, "Could not find book " + param, http.StatusNotFound}
-// 	}
+	err, b := models.GetBook(Id)
 
-// 	return b, nil
-// }
+	if err != nil {
+		return nil, &models.HandlerError{nil, "Could not find book " + Id, http.StatusNotFound}
+	}
+
+	return b, nil
+}
 
 func parseBookRequest(r *http.Request) (models.Book, *models.HandlerError) {
 	// the book payload is in the request body

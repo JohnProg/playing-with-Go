@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"gopkg.in/mgo.v2/bson"
 	"log"
 )
@@ -15,27 +14,35 @@ type HandlerError struct {
 
 // book model
 type Book struct {
-	Id     bson.ObjectId `bson:"_id"`
+	Id     bson.ObjectId `bson:"_id" json:"id"`
 	Title  string        `json:"title"`
 	Author string        `json:"author"`
 }
 
-func AllBooks() (msgs []Book) {
-	_ = books.
-		Find(bson.M{}).
-		All(&msgs)
-	log.Println(msgs)
+func AllBooks() (books2 []Book, err error) {
+	err = books.
+		Find(nil).
+		All(&books2)
 	return
 }
 
 // Save inserts a new book into MongoDB
 func CreateBook(book Book) error {
-
-	book.Id = bson.NewObjectId()
+	// First, let's get a new id
+	obj_id := bson.NewObjectId()
+	book.Id = obj_id
 
 	if err := books.Insert(book); err != nil {
-		return fmt.Errorf("Error creating new book: %v", err)
+		return err
 	}
-	log.Println(book)
 	return nil
+}
+
+func GetBook(Id string) (err error, book Book) {
+	bid := bson.ObjectIdHex(Id)
+	err = books.
+		FindId(bid).
+		One(&book)
+	log.Println(book)
+	return
 }
