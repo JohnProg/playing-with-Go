@@ -2,7 +2,13 @@
 
 	{{ template "header" }}
 
-	<h1>Hola Mama</h1>
+	<h1>Listado de Usuarios</h1>
+
+	<ul>
+		{{ range $key, $value := . }}
+			<li><a href="/edit?id={{$key}}">{{ $value.Email }}</a></li>
+		{{ end }}
+	</ul>
 
 	{{ template "footer" }}
 
