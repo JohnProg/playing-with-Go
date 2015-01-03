@@ -15,6 +15,8 @@ type Handler func(w http.ResponseWriter, r *http.Request) (interface{}, *models.
 func (fn Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// here we could do some prep work before calling the handler if we wanted to
 
+	// TODO: validate authentification and permissions by domain
+
 	// call the actual handler
 	response, err := fn(w, r)
 
