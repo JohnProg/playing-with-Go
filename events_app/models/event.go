@@ -4,16 +4,16 @@ import (
 	"time"
 )
 
-type Event struct
-{	
-	name string
-	location string
-	city string
-	date time.Time
-	people []People // speaker, organizator, attendee
+type Event struct {
+	Name     string
+	Location string
+	City     string
+	Date     time.Time
+	People2  []People // speaker, organizator, attendee
 }
-func (e Event) MeetupPeople(){
-	for _, v := range e.people {
+
+func (e Event) MeetupPeople() {
+	for _, v := range e.People2 {
 		v.SayHello()
 		v.GetDetails()
 	}

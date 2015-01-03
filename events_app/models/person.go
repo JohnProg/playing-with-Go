@@ -10,17 +10,17 @@ type People interface {
 }
 
 type Person struct {
-	name string
-	age int
-	city,phone string
+	Name        string
+	Age         int
+	City, Phone string
 }
 
 //A person method
-func (p Person ) SayHello() {
-	fmt.Printf("Hi, I am %s, from %s\n", p.name, p.city)
+func (p Person) SayHello() {
+	fmt.Printf("Hi, I am %s, from %s\n", p.Name, p.City)
 }
 
 //A person method
 func (p Person) GetDetails() {
-	fmt.Printf("[Name: %s, Age: %d, City: %s, Phone: %s]\n", p.name,p.age, p.city, p.phone)
+	fmt.Printf("[Name: %s, Age: %d, City: %s, Phone: %s]\n", p.Name, p.Age, p.City, p.Phone)
 }
