@@ -5,13 +5,6 @@ import (
 	// "log"
 )
 
-// error response contains everything we need to use http.Error
-type HandlerError struct {
-	Error   error
-	Message string
-	Code    int
-}
-
 // book model
 type Book struct {
 	Id     bson.ObjectId `bson:"_id" json:"id"`

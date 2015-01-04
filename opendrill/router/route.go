@@ -19,6 +19,14 @@ func Init() {
 	router.Handle("/books/{id}", middlewares.Handler(controllers.GetBook)).Methods("GET")
 	router.Handle("/books/{id}", middlewares.Handler(controllers.UpdateBook)).Methods("PUT")
 	router.Handle("/books/{id}", middlewares.Handler(controllers.RemoveBook)).Methods("DELETE")
+	//Contact
+	router.Handle("/contacts", middlewares.Handler(controllers.ListContacts)).Methods("GET")
+	// router.Handle("/contacts", middlewares.Handler(controllers.AddContact)).Methods("POST")
+	// router.Handle("/contacts/{id}", middlewares.Handler(controllers.GetContact).Methods("GET")
+	// router.Handle("/contacts/{id}", middlewares.Handler(controllers.UpdateContact)).Methods("PUT")
+	// router.Handle("/contacts/{id}", middlewares.Handler(controllers.RemoveContact)).Methods("DELETE")
+
+
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileHandler))
 	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(config.Public)))

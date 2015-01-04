@@ -1,11 +1,13 @@
 package controllers
 
 import (
-	models "../models"
-	"encoding/json"
 	"github.com/gorilla/mux"
+
+	"encoding/json"
 	"log"
 	"net/http"
+
+	models "../models"
 )
 
 func ListBooks(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
