@@ -3,8 +3,6 @@ package controllers
 import (
 	models "../models"
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"log"
 	"net/http"
 )
 
@@ -18,7 +16,8 @@ func ListBooks(w http.ResponseWriter, r *http.Request) (interface{}, *models.Han
 
 func GetBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	// mux.Vars grabs variables from the path
-	Id := mux.Vars(r)["id"]
+	// Id := mux.Vars(r)["id"]
+	Id := r.URL.Path[len("/books/"):]
 	if len(Id) != 24 {
 		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
 	}
@@ -42,7 +41,7 @@ func AddBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.Handl
 }
 
 func UpdateBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	Id := mux.Vars(r)["id"]
+	Id := r.URL.Path[len("/books/"):]
 	if len(Id) != 24 {
 		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
 	}
@@ -58,8 +57,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.Ha
 }
 
 func RemoveBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	Id := mux.Vars(r)["id"]
-	log.Println(Id)
+	Id := r.URL.Path[len("/books/"):]
 	if len(Id) != 24 {
 		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
 	}
