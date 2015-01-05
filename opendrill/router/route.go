@@ -2,7 +2,6 @@ package router
 
 import (
 	"../app/controllers"
-	"../app/middlewares"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -14,17 +13,17 @@ func Init() {
 	// setup routes
 	router := mux.NewRouter()
 	router.Handle("/", http.RedirectHandler("/static/", 302))
-	router.Handle("/books", middlewares.Handler(controllers.ListBooks)).Methods("GET")
-	router.Handle("/books", middlewares.Handler(controllers.AddBook)).Methods("POST")
-	router.Handle("/books/{id}", middlewares.Handler(controllers.GetBook)).Methods("GET")
-	router.Handle("/books/{id}", middlewares.Handler(controllers.UpdateBook)).Methods("PUT")
-	router.Handle("/books/{id}", middlewares.Handler(controllers.RemoveBook)).Methods("DELETE")
+	router.Handle("/books", handler(controllers.ListBooks)).Methods("GET")
+	router.Handle("/books", handler(controllers.AddBook)).Methods("POST")
+	router.Handle("/books/{id}", handler(controllers.GetBook)).Methods("GET")
+	router.Handle("/books/{id}", handler(controllers.UpdateBook)).Methods("PUT")
+	router.Handle("/books/{id}", handler(controllers.RemoveBook)).Methods("DELETE")
 	//Contact
-	router.Handle("/contacts", middlewares.Handler(controllers.ListContacts)).Methods("GET")
-	// router.Handle("/contacts", middlewares.Handler(controllers.AddContact)).Methods("POST")
-	// router.Handle("/contacts/{id}", middlewares.Handler(controllers.GetContact).Methods("GET")
-	// router.Handle("/contacts/{id}", middlewares.Handler(controllers.UpdateContact)).Methods("PUT")
-	// router.Handle("/contacts/{id}", middlewares.Handler(controllers.RemoveContact)).Methods("DELETE")
+	router.Handle("/contacts", handler(controllers.ListContacts)).Methods("GET")
+	router.Handle("/contacts", handler(controllers.AddContact)).Methods("POST")
+	router.Handle("/contacts/{id}", handler(controllers.GetContact)).Methods("GET")
+	router.Handle("/contacts/{id}", handler(controllers.UpdateContact)).Methods("PUT")
+	router.Handle("/contacts/{id}", handler(controllers.RemoveContact)).Methods("DELETE")
 
 
 

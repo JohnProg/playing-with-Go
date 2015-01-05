@@ -1,7 +1,7 @@
-package middlewares
+package router
 
 import (
-	"../models"
+	"../app/models"
 	"encoding/json"
 	"fmt"
 	"log"
