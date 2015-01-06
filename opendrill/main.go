@@ -13,7 +13,6 @@ import (
 const (
 	MONGO_URLS    = "mongodb://127.0.0.1"
 	DATABASE_NAME = "opendrill"
-	MEMCACHE_URLS = "localhost:11211"
 )
 
 var (
@@ -30,6 +29,10 @@ func init() {
 	session.SetMode(mgo.Strong, true)
 	db = session.DB(DATABASE_NAME)
 	models.SetDB(db)
+}
+
+func CloseSession() {
+	session.Close()
 }
 
 func main() {

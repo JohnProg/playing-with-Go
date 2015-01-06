@@ -15,11 +15,13 @@ var (
 	db *mgo.Database
 	books *mgo.Collection
 	contacts *mgo.Collection
+	list_contacts *mgo.Collection
 )
 
 func SetDB(mgoDB *mgo.Database) {
 	db = mgoDB
-	// users = db.C("users")
+
 	books = db.C("books")
 	contacts = db.C("contacts")
+	list_contacts = db.C("list_contacts")
 }

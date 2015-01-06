@@ -8,9 +8,9 @@ import (
 	"net/http"
 )
 
-type handler func(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError)
+type Handler func(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError)
 
-func (fn handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (fn Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	response, err := fn(w, r)
 
 	// check for errors

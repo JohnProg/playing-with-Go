@@ -1,11 +1,14 @@
 package models
 
 import "gopkg.in/mgo.v2/bson"
+import "time"
 
 type Contact struct{
-	Id bson.ObjectId `bson:"_id" json:"id"`
-	Name string
-	Email string
+	Id 			bson.ObjectId 	`bson:"_id" json:"id"`
+	Name 		string
+	Email 		string
+	Created     time.Time 		`db:"created" json:"created"`
+	Modified    time.Time 		`db:"modified" json:"modified"`
 }
 
 func AllContact() (contact2 []Contact, err error) {
@@ -23,6 +26,8 @@ func GetContact(Id string) (err error, contact Contact) {
 
 func CreateContact(contact Contact) (err error, contact2 Contact) {
 	contact2 = contact
+	contact2.Created = time.Now()
+	contact2.Modified = time.Now()
 	contact2.Id = bson.NewObjectId()
 
 	if err := contacts.Insert(contact2); err != nil {
@@ -50,6 +55,7 @@ func UpdateContact(contact Contact, Id string) (err error, contact2 Contact) {
 		bson.M{
 			"name": contact2.Name,
 			"email": contact2.Email,
+			"modified": time.Now(),
 			"_id":    bid,
 		})
 	if err != nil {

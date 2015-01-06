@@ -37,11 +37,11 @@ func AddContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.Ha
 	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-	err, book := models.CreateContact(payload)
+	err, contact := models.CreateContact(payload)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not create contact ", http.StatusNotFound}
 	}
-	return book, nil
+	return contact, nil
 }
 
 func UpdateContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
@@ -53,11 +53,11 @@ func UpdateContact(w http.ResponseWriter, r *http.Request) (interface{}, *models
 	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-	err, book := models.UpdateContact(payload, Id)
+	err, contact := models.UpdateContact(payload, Id)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not update contact " + Id + " to update", http.StatusNotFound}
 	}
-	return book, nil
+	return contact, nil
 }
 
 func RemoveContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
@@ -66,7 +66,7 @@ func RemoveContact(w http.ResponseWriter, r *http.Request) (interface{}, *models
 	if len(Id) != 24 {
 		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
 	}
-	err, deleted := models.RemoveBook(Id)
+	err, deleted := models.RemoveContact(Id)
 
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not find contact " + Id + " to delete", http.StatusNotFound}
