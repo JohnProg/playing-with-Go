@@ -4,7 +4,6 @@ import (
 	"github.com/gorilla/mux"
 
 	"encoding/json"
-	"log"
 	"net/http"
 
 	models "../models"
@@ -61,7 +60,6 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.Ha
 
 func RemoveBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	Id := mux.Vars(r)["id"]
-	log.Println(Id)
 	if len(Id) != 24 {
 		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
 	}

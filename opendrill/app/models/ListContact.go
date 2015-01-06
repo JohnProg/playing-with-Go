@@ -34,3 +34,39 @@ func CreateListContact(list_contact ListContact) (err error, list_contact2 ListC
 	return nil, list_contact2
 
 }
+
+func GetListContact(Id string)(err error, list_contact ListContact) {
+	bid := bson.ObjectIdHex(Id)
+	err = list_contacts.
+		FindId(bid).
+		One(&list_contact)
+	return 
+}
+
+func RemoveListContact(Id string) (err error, deleted bool) {
+	deleted = false
+	bid := bson.ObjectIdHex(Id)
+	err = list_contacts.
+		Remove(bson.M{"_id": bid})
+	if err != nil {
+		return err, deleted
+	}
+	deleted = true
+	return nil, deleted
+}
+
+func UpdateListContact(list_contact ListContact, Id string) (err error, list_contact2 ListContact) {
+	list_contact2 = list_contact
+	bid := bson.ObjectIdHex(Id)
+	err = list_contacts.Update(bson.M{"_id": bid},
+		bson.M{
+			"name": 	list_contact2.Name,
+			"detail": 	list_contact2.Detail,
+			"_id": 		bid,
+		})
+	if err != nil {
+		return err, list_contact
+	}
+	list_contact2.Id = bid
+	return nil, list_contact2
+}

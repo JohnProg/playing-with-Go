@@ -24,4 +24,6 @@ func SetDB(mgoDB *mgo.Database) {
 	books = db.C("books")
 	contacts = db.C("contacts")
 	list_contacts = db.C("list_contacts")
+
+	contacts.EnsureIndexKey("email")
 }

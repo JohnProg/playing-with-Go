@@ -1,5 +1,5 @@
 #Pre requisites
-
+sudo apt-get install golang
 mkdir $HOME/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin

@@ -28,8 +28,9 @@ func Init() {
 	//List Contact
 	router.Handle("/list-contacts/", middlewares.Handler(controllers.ListListContacts)).Methods("GET")
 	router.Handle("/list-contacts/", middlewares.Handler(controllers.AddListContact)).Methods("POST")
-
-
+	router.Handle("/list-contacts/{id}", middlewares.Handler(controllers.GetListContact)).Methods("GET")
+	router.Handle("/list-contacts/{id}", middlewares.Handler(controllers.UpdateListContact)).Methods("PUT")
+	router.Handle("/list-contacts/{id}", middlewares.Handler(controllers.RemoveListContact)).Methods("DELETE")
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileHandler))
 	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(config.Public)))
