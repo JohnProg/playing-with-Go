@@ -2,13 +2,22 @@ package main
 
 import (
 	"gopkg.in/mgo.v2"
-	"flag"
-	"log"
-	"fmt"
+	"encoding/json"
 	"net/http"
+	"log"
+	"os"
 	"./app/models"
 	"./router"
 )
+
+var settings struct {
+    Debug 			bool 	`json:"Debug"`
+    Url  			string 	`json:"Url"`
+    Port  			string 	`json:"Port"`
+    DatabaseName  	string 	`json:"DatabaseName"`
+    DatabaseUrl  	string 	`json:"DatabaseUrl"`
+    Https  			bool 	`json:"Https"`
+}
 
 const (
 	MONGO_URLS    = "mongodb://127.0.0.1"
@@ -22,12 +31,23 @@ var (
 
 func init() {
 	var err error
-	session, err = mgo.Dial(MONGO_URLS)
+
+	configFile, err := os.Open("settings.json")
+    if err != nil {
+    	log.Fatalf("opening settings file", err.Error())
+    }
+
+    jsonParser := json.NewDecoder(configFile)
+    if err = jsonParser.Decode(&settings); err != nil {
+    	log.Fatalf("parsing config file", err.Error())
+    }
+
+	session, err = mgo.Dial(settings.DatabaseUrl)
 	if err != nil {
-		log.Fatalf("Error connecting to MongoDB '%s'", MONGO_URLS)
+		log.Fatalf("Error connecting to MongoDB '%s'", settings.DatabaseUrl)
 	}
 	session.SetMode(mgo.Strong, true)
-	db = session.DB(DATABASE_NAME)
+	db = session.DB(settings.DatabaseName)
 	models.SetDB(db)
 }
 
@@ -36,15 +56,12 @@ func CloseSession() {
 }
 
 func main() {
-	port := flag.Int("port", 6969, "port to serve on")
-	flag.Parse()
 
 	defer session.Close()
 
 	router.Init()
-
-	log.Printf("Running on port %d\n", *port)
-	addr := fmt.Sprintf("127.0.0.1:%d", *port)
+	log.Println("Running:", settings.Url)
+	addr := settings.Url
 	err := http.ListenAndServe(addr, nil)
 	log.Println(err.Error())
 }
