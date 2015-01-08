@@ -19,11 +19,6 @@ var settings struct {
     Https  			bool 	`json:"Https"`
 }
 
-const (
-	MONGO_URLS    = "mongodb://127.0.0.1"
-	DATABASE_NAME = "opendrill"
-)
-
 var (
 	session *mgo.Session
 	db      *mgo.Database
