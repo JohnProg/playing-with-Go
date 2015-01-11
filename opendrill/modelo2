@@ -1,0 +1,20 @@
+categor: [
+	{cat1},
+	{cat2},
+	{cat3},
+	{cat4}
+]
+
+list_contact: [
+	list1:{cat1, cat2},
+ 	list2: {cat3, cat4}
+]
+
+contact: [
+	{
+		name: "x"
+		listID: [list1, list2]
+		categoriaID: [cat2, cat3]
+	}
+]
+
