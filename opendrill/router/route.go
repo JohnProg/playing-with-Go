@@ -19,6 +19,12 @@ func Init() {
 	// router.Handle("/books/{id}", handler(controllers.GetBook)).Methods("GET")
 	// router.Handle("/books/{id}", handler(controllers.UpdateBook)).Methods("PUT")
 	// router.Handle("/books/{id}", handler(controllers.RemoveBook)).Methods("DELETE")
+	//Category
+	router.Handle("/categories/", middlewares.Handler(controllers.ListCategories)).Methods("GET")
+	router.Handle("/categories/", middlewares.Handler(controllers.AddCategory)).Methods("POST")
+	router.Handle("/categories/{id}", middlewares.Handler(controllers.GetCategory)).Methods("GET")
+	router.Handle("/categories/{id}", middlewares.Handler(controllers.UpdateCategory)).Methods("PUT")
+	router.Handle("/categories/{id}", middlewares.Handler(controllers.RemoveCategory)).Methods("DELETE")
 	//Contact
 	router.Handle("/contacts/", middlewares.Handler(controllers.ListContacts)).Methods("GET")
 	router.Handle("/contacts/", middlewares.Handler(controllers.AddContact)).Methods("POST")
