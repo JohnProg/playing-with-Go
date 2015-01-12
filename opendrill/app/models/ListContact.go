@@ -5,16 +5,12 @@ import "time"
 
 
 type ListContact struct{
-	Id 			bson.ObjectId  `bson:" json:"id"`
+	Id 			bson.ObjectId  		`bson:" json:"id"`
 	Name 		string			
 	Status 		bool
-	Detail 	    []DetailContact `bson:"detail"`
-	Created     time.Time 		`db:"created" json:"created"`
-	Modified    time.Time 		`db:"modified" json:"modified"`
-}
-
-type DetailContact struct {
-	Contact      Contact `bson:"contact"`
+	Categories 	[]string 			`db:"categories" json:"categories"`
+	Created     time.Time 			`db:"created" json:"created"`
+	Modified    time.Time 			`db:"modified" json:"modified"`
 }
 
 func AllListContact() (list_contact2 []ListContact, err error){
@@ -61,7 +57,7 @@ func UpdateListContact(list_contact ListContact, Id string) (err error, list_con
 	err = list_contacts.Update(bson.M{"_id": bid},
 		bson.M{
 			"name": 	list_contact2.Name,
-			"detail": 	list_contact2.Detail,
+			"categories": 	list_contact2.Categories,
 			"_id": 		bid,
 		})
 	if err != nil {

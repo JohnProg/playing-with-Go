@@ -12,10 +12,11 @@ type HandlerError struct {
 }
 
 var (
-	db *mgo.Database
-	books *mgo.Collection
-	contacts *mgo.Collection
-	list_contacts *mgo.Collection
+	db 				*mgo.Database
+	books 			*mgo.Collection
+	contacts 		*mgo.Collection
+	list_contacts 	*mgo.Collection
+	categories 		*mgo.Collection
 )
 
 func SetDB(mgoDB *mgo.Database) {
@@ -24,6 +25,7 @@ func SetDB(mgoDB *mgo.Database) {
 	books = db.C("books")
 	contacts = db.C("contacts")
 	list_contacts = db.C("list_contacts")
+	categories = db.C("categories")
 
 	contacts.EnsureIndexKey("email")
 }
