@@ -12,10 +12,11 @@ type HandlerError struct {
 }
 
 var (
-	db        *mgo.Database
-	designers *mgo.Collection
-	templates *mgo.Collection
-	contacts  *mgo.Collection
+	db           *mgo.Database
+	designers    *mgo.Collection
+	organizators *mgo.Collection
+	templates    *mgo.Collection
+	contacts     *mgo.Collection
 )
 
 func SetDB(mgoDB *mgo.Database) {
@@ -23,6 +24,7 @@ func SetDB(mgoDB *mgo.Database) {
 	designers = db.C("designers")
 	templates = db.C("templates")
 	contacts = db.C("contacts")
+	organizators = db.C("organizators")
 
 	contacts.EnsureIndexKey("email")
 
@@ -31,6 +33,7 @@ func SetDB(mgoDB *mgo.Database) {
 		Unique: true,
 	}
 	designers.EnsureIndex(index)
+	organizators.EnsureIndex(index)
 
 	index2 := mgo.Index{
 		Key:    []string{"name", "designerId"},

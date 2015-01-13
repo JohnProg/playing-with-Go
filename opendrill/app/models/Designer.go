@@ -18,6 +18,7 @@ func AllDesigners() (designers2 []Designer, err error) {
 func CreateDesigner(designer Designer) (err error, designer2 Designer) {
 	designer2 = designer
 	designer2.Id = bson.NewObjectId()
+	designer2.User.Role = 3
 	designer2.Templates = []Template{}
 
 	if err := designers.Insert(designer2); err != nil {

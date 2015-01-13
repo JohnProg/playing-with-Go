@@ -35,6 +35,13 @@ func Init() {
 	router.Handle("/designers/{designerID}/templates/{templateID}", middleware.Handler(controllers.UpdateTemplateFromDesigner)).Methods("PUT")
 	router.Handle("/designers/{designerID}/templates/{templateID}", middleware.Handler(controllers.RemoveTemplateFromDesigner)).Methods("DELETE")
 
+	//Organizator
+	router.Handle("/organizator", middleware.Handler(controllers.AllOrganizators)).Methods("GET")
+	router.Handle("/organizator", middleware.Handler(controllers.CreateOrganizator)).Methods("POST")
+	router.Handle("/organizator/{organizatorID}", middleware.Handler(controllers.GetOrganizator)).Methods("GET")
+	router.Handle("/organizator/{organizatorID}", middleware.Handler(controllers.UpdateOrganizator)).Methods("PUT")
+	router.Handle("/organizator/{organizatorID}", middleware.Handler(controllers.RemoveOrganizator)).Methods("DELETE")
+
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileHandler))
 	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(config.Public)))
 	http.Handle("/", router)
