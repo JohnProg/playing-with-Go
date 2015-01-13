@@ -18,7 +18,7 @@ func main() {
 		a.Connection.Session.Close()
 	}()
 
-	log.Printf("Running on port ", a.Config.Port)
+	log.Printf("Running on port %s", a.Config.Port)
 	if err := http.ListenAndServe(a.Config.Port, nil); err != nil {
 		log.Println(err.Error())
 	}
