@@ -1,0 +1,7 @@
+{
+    "debug": true,
+    "url": "localhost:6969",
+    "port": ":6969",
+    "database_name": "opendrill",
+    "database_url": "127.0.0.1:27017"
+}

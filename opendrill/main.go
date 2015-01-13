@@ -1,52 +1,25 @@
 package main
 
 import (
-	"./app/models"
-	"./router"
-	"github.com/bradfitz/gomemcache/memcache"
-	"gopkg.in/mgo.v2"
+	"./app"
 	"log"
 	"net/http"
-	// "runtime"
 )
-
-const (
-	MONGO_URLS    = "mongodb://127.0.0.1"
-	DATABASE_NAME = "opendrill"
-	MEMCACHE_URLS = "localhost:11211"
-)
-
-var (
-	session *mgo.Session
-	db      *mgo.Database
-	mc      *memcache.Client
-)
-
-// // Connect to DB
-func init() {
-	var err error
-	session, err = mgo.Dial(MONGO_URLS)
-	if err != nil {
-		log.Fatalf("Error connecting to MongoDB '%s'", MONGO_URLS)
-	}
-	// session.SetMode(mgo.Monotonic, true)
-	session.SetMode(mgo.Strong, true) // Most similar to Postgres
-	db = session.DB(DATABASE_NAME)
-	models.SetDB(db)
-}
-
-// // Connect to cache
-func init() {
-	mc = memcache.New(MEMCACHE_URLS)
-	// handlers.SetCache(mc)
-}
 
 func main() {
-	// runtime.GOMAXPROCS(runtime.NumCPU())
-	defer session.Close()
+	var configPath = "config.json"
 
-	router.Init()
+	a, err := app.NewApp(configPath)
+	if err != nil {
+		panic(err)
+	}
 
-	log.Println("Listening on 8080")
-	http.ListenAndServe(":8080", nil)
+	defer func() {
+		a.Connection.Session.Close()
+	}()
+
+	log.Printf("Running on port ", a.Config.Port)
+	if err := http.ListenAndServe(a.Config.Port, nil); err != nil {
+		log.Println(err.Error())
+	}
 }
