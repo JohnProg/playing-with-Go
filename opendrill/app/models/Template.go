@@ -33,9 +33,8 @@ func GetTemplateFromDesigner(designerID string, templateID string) (err error, t
 
 func AddTemplateToDesigner(template Template, designerID string) (err error, template2 Template) {
 	var designer Designer
-	err, designer = GetDesigner(designerID)
-	if err != nil {
-		return err, template
+	if err, designer := GetDesigner(designerID); err != nil {
+		return err, Template{}
 	}
 	template2 = template
 	template2.Id = bson.NewObjectId()
@@ -52,22 +51,27 @@ func AddTemplateToDesigner(template Template, designerID string) (err error, tem
 }
 
 func RemoveTemplateFromDesigner(designerID string, templateID string) (err error, deleted bool) {
-	// deleted = false
-	// bid := bson.ObjectIdHex(Id)
-	// err = designers.
-	// 	Remove(bson.M{"_id": bid})
-	// if err != nil {
-	// 	return err, deleted
-	// }
-	deleted = true
-	return nil, deleted
+	var designer Designer
+	if err, designer := GetDesigner(designerID); err != nil {
+		return err, false
+	}
+
+	err = templates.
+		Remove(bson.M{"_id": bson.ObjectIdHex(templateID)})
+	if err != nil {
+		return err, false
+	}
+	designers.Update(bson.M{"_id": designer.Id},
+		bson.M{
+			"templates": GetTemplatesFromDesigner(designerID),
+		})
+	return nil, true
 }
 
 func UpdateTemplateFromDesigner(template Template, designerID string, templateID string) (err error, template2 Template) {
 	var designer Designer
-	err, designer = GetDesigner(designerID)
-	if err != nil {
-		return err, template
+	if err, designer := GetDesigner(designerID); err != nil {
+		return err, Template{}
 	}
 
 	template2 = template

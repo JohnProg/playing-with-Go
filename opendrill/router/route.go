@@ -28,7 +28,7 @@ func Init() {
 	router.Handle("/designers/{designerID}", middleware.Handler(controllers.UpdateDesigner)).Methods("PUT")
 	router.Handle("/designers/{designerID}", middleware.Handler(controllers.RemoveDesigner)).Methods("DELETE")
 
-	// //Template
+	//Template
 	router.Handle("/designers/{designerID}/templates", middleware.Handler(controllers.AddTemplateToDesigner)).Methods("POST")
 	router.Handle("/designers/{designerID}/templates", middleware.Handler(controllers.GetTemplatesFromDesigner)).Methods("GET")
 	router.Handle("/designers/{designerID}/templates/{templateID}", middleware.Handler(controllers.GetTemplateFromDesigner)).Methods("GET")
@@ -41,6 +41,13 @@ func Init() {
 	router.Handle("/organizator/{organizatorID}", middleware.Handler(controllers.GetOrganizator)).Methods("GET")
 	router.Handle("/organizator/{organizatorID}", middleware.Handler(controllers.UpdateOrganizator)).Methods("PUT")
 	router.Handle("/organizator/{organizatorID}", middleware.Handler(controllers.RemoveOrganizator)).Methods("DELETE")
+
+	//Organization
+	router.Handle("/organizator/{organizatorID}/organizations", middleware.Handler(controllers.AddOrganizationToOrganizator)).Methods("POST")
+	router.Handle("/organizator/{organizatorID}/organizations", middleware.Handler(controllers.GetOrganizationsFromOrganizator)).Methods("GET")
+	router.Handle("/organizator/{organizatorID}/organizations/{organizationID}", middleware.Handler(controllers.GetOrganizationFromOrganizator)).Methods("GET")
+	router.Handle("/organizator/{organizatorID}/organizations/{organizationID}", middleware.Handler(controllers.UpdateOrganizationFromOrganizator)).Methods("PUT")
+	router.Handle("/organizator/{organizatorID}/organizations/{organizationID}", middleware.Handler(controllers.RemoveOrganizationFromOrganizator)).Methods("DELETE")
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileHandler))
 	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(config.Public)))
