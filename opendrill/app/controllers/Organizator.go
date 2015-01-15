@@ -29,6 +29,7 @@ func GetOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *model
 }
 
 func CreateOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
+	defer r.Body.Close()
 	var organizator models.Organizator
 	if err := json.NewDecoder(r.Body).Decode(&organizator); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
@@ -46,6 +47,7 @@ func UpdateOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *mo
 	if !bson.IsObjectIdHex(organizatorID) {
 		return nil, &models.HandlerError{nil, "organizatorID is not valid", http.StatusBadRequest}
 	}
+	defer r.Body.Close()
 	var organizator models.Organizator
 	if err := json.NewDecoder(r.Body).Decode(&organizator); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}

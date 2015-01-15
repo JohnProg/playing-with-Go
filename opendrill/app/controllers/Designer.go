@@ -29,12 +29,13 @@ func GetDesigner(w http.ResponseWriter, r *http.Request) (interface{}, *models.H
 }
 
 func AddDesigner(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	var payload models.Designer
-	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+	defer r.Body.Close()
+	var designer models.Designer
+	if err := json.NewDecoder(r.Body).Decode(&designer); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
 
-	err, designer := models.CreateDesigner(payload)
+	err, designer := models.CreateDesigner(designer)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not create designer ", http.StatusNotFound}
 	}
@@ -46,11 +47,12 @@ func UpdateDesigner(w http.ResponseWriter, r *http.Request) (interface{}, *model
 	if !bson.IsObjectIdHex(designerID) {
 		return nil, &models.HandlerError{nil, "designerID is not valid", http.StatusBadRequest}
 	}
-	var payload models.Designer
-	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+	defer r.Body.Close()
+	var designer models.Designer
+	if err := json.NewDecoder(r.Body).Decode(&designer); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-	err, designer := models.UpdateDesigner(payload, designerID)
+	err, designer := models.UpdateDesigner(designer, designerID)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not update designer " + designerID + " to update", http.StatusNotFound}
 	}

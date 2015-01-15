@@ -2,6 +2,7 @@ package models
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	"log"
 	"time"
 )
 
@@ -34,10 +35,13 @@ func GetTemplateFromDesigner(designerID string, templateID string) (err error, t
 func AddTemplateToDesigner(template Template, designerID string) (err error, template2 Template) {
 	var designer Designer
 	if err, designer := GetDesigner(designerID); err != nil {
+		log.Println(designer)
 		return err, Template{}
 	}
 	template2 = template
 	template2.Id = bson.NewObjectId()
+	template2.CreatedAt = time.Now()
+	template2.ModifiedAt = time.Now()
 	template2.DesignerID = designer.Id
 	if err := templates.Insert(template2); err != nil {
 		return err, template
@@ -53,6 +57,7 @@ func AddTemplateToDesigner(template Template, designerID string) (err error, tem
 func RemoveTemplateFromDesigner(designerID string, templateID string) (err error, deleted bool) {
 	var designer Designer
 	if err, designer := GetDesigner(designerID); err != nil {
+		log.Println(designer)
 		return err, false
 	}
 
@@ -71,6 +76,7 @@ func RemoveTemplateFromDesigner(designerID string, templateID string) (err error
 func UpdateTemplateFromDesigner(template Template, designerID string, templateID string) (err error, template2 Template) {
 	var designer Designer
 	if err, designer := GetDesigner(designerID); err != nil {
+		log.Println(designer)
 		return err, Template{}
 	}
 
@@ -83,8 +89,8 @@ func UpdateTemplateFromDesigner(template Template, designerID string, templateID
 			"type":       template2.Type,
 			"_id":        bid,
 			"designerId": bson.ObjectIdHex(designerID),
-			"CreatedAt":  template2.CreatedAt,
-			"ModifiedAt": time.Now(),
+			"createdAt":  template2.CreatedAt,
+			"modifiedAt": time.Now(),
 		})
 	if err != nil {
 		return err, template

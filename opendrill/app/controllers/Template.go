@@ -38,6 +38,7 @@ func AddTemplateToDesigner(w http.ResponseWriter, r *http.Request) (interface{},
 	if !bson.IsObjectIdHex(designerID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
+	defer r.Body.Close()
 	var template models.Template
 	if err := json.NewDecoder(r.Body).Decode(&template); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
@@ -55,6 +56,7 @@ func UpdateTemplateFromDesigner(w http.ResponseWriter, r *http.Request) (interfa
 	if !bson.IsObjectIdHex(designerID) && !bson.IsObjectIdHex(templateID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
+	defer r.Body.Close()
 	var template models.Template
 	if err := json.NewDecoder(r.Body).Decode(&template); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}

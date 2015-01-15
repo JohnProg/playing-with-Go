@@ -13,11 +13,11 @@ func GetOrganizationsFromOrganizator(w http.ResponseWriter, r *http.Request) (in
 	if !bson.IsObjectIdHex(organizatorID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
-	templates := models.GetOrganizationsFromOrganizator(organizatorID)
-	if templates == nil {
-		return []models.Template{}, nil
+	organizations := models.GetOrganizationsFromOrganizator(organizatorID)
+	if organizations == nil {
+		return []models.Organization{}, nil
 	}
-	return templates, nil
+	return organizations, nil
 }
 
 func GetOrganizationFromOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
@@ -26,11 +26,11 @@ func GetOrganizationFromOrganizator(w http.ResponseWriter, r *http.Request) (int
 	if !bson.IsObjectIdHex(organizatorID) && !bson.IsObjectIdHex(organizationID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
-	err, template := models.GetOrganizationFromOrganizator(organizatorID, organizationID)
+	err, organization := models.GetOrganizationFromOrganizator(organizatorID, organizationID)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not find designer " + organizationID, http.StatusNotFound}
 	}
-	return template, nil
+	return organization, nil
 }
 
 func AddOrganizationToOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
@@ -38,15 +38,16 @@ func AddOrganizationToOrganizator(w http.ResponseWriter, r *http.Request) (inter
 	if !bson.IsObjectIdHex(organizatorID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
-	var template models.Template
-	if err := json.NewDecoder(r.Body).Decode(&template); err != nil {
+	defer r.Body.Close()
+	var organization models.Organization
+	if err := json.NewDecoder(r.Body).Decode(&organization); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-	err, template := models.AddOrganizationToOrganizator(template, organizatorID)
+	err, organization := models.AddOrganizationToOrganizator(organization, organizatorID)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not create book ", http.StatusNotFound}
 	}
-	return template, nil
+	return organization, nil
 }
 
 func UpdateOrganizationFromOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
@@ -55,15 +56,16 @@ func UpdateOrganizationFromOrganizator(w http.ResponseWriter, r *http.Request) (
 	if !bson.IsObjectIdHex(organizatorID) && !bson.IsObjectIdHex(organizationID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
-	var template models.Template
-	if err := json.NewDecoder(r.Body).Decode(&template); err != nil {
+	defer r.Body.Close()
+	var organization models.Organization
+	if err := json.NewDecoder(r.Body).Decode(&organization); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-	err, template := models.UpdateOrganizationFromOrganizator(template, organizatorID, organizationID)
+	err, organization := models.UpdateOrganizationFromOrganizator(organization, organizatorID, organizationID)
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not update book " + organizatorID + " to update", http.StatusNotFound}
 	}
-	return template, nil
+	return organization, nil
 }
 
 func RemoveOrganizationFromOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
