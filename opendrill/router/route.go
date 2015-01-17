@@ -1,7 +1,9 @@
 package router
 
 import (
-	"../app/controllers"
+	"../app/controllers/website"
+	"../app/controllers/admin"
+	"../app/controllers/client"
 	"../app/middlewares"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -14,7 +16,22 @@ func Init() {
 	// setup routes
 	router := mux.NewRouter()
 	router.Handle("/", http.RedirectHandler("/static/", 302))
+	
+	//Website
+	router.Handle("/register/", middleware.Handler(website.RegisterUser)).Methods("POST")
+
+	//Administrator
+	router.Handle("/admin/organizations/", middleware.Handler(admin.ListOrganizations)).Methods("GET")
+
+	//Client
+	router.Handle("/client/{organizatorID}/organizations/", middleware.Handler(client.GetOrganizationsFromOrganizator)).Methods("GET")
+	router.Handle("/client/organization/{organizationID}/", middleware.Handler(client.GetOrganization)).Methods("GET")
+	router.Handle("/client/{organizationID}/add-user/", middleware.Handler(client.AddUser)).Methods("POST")
+
+
+
 	//Category
+	/*
 	router.Handle("/categories/", middleware.Handler(controllers.ListCategories)).Methods("GET")
 	router.Handle("/categories/", middleware.Handler(controllers.AddCategory)).Methods("POST")
 	router.Handle("/categories/{categoryID}", middleware.Handler(controllers.GetCategory)).Methods("GET")
@@ -62,8 +79,7 @@ func Init() {
 	router.Handle("/organizator/{organizatorID}/organizations/{organizationID}", middleware.Handler(controllers.GetOrganizationFromOrganizator)).Methods("GET")
 	router.Handle("/organizator/{organizatorID}/organizations/{organizationID}", middleware.Handler(controllers.UpdateOrganizationFromOrganizator)).Methods("PUT")
 	router.Handle("/organizator/{organizatorID}/organizations/{organizationID}", middleware.Handler(controllers.RemoveOrganizationFromOrganizator)).Methods("DELETE")
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
-
+	*/
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileHandler))
 	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(config.Public)))
 	http.Handle("/", router)

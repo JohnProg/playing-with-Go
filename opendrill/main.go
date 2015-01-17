@@ -22,3 +22,4 @@ func main() {
 	if err := http.ListenAndServe(a.Config.Port, nil); err != nil {
 		log.Println(err.Error())
 	}
+}

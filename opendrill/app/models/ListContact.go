@@ -4,12 +4,12 @@ import "gopkg.in/mgo.v2/bson"
 import "time"
 
 type ListContact struct {
-	Id         bson.ObjectId `bson:" json:"id"`
-	Name       string
-	Status     bool
-	Categories []string  `bson:"categories" json:"categories"`
-	CreatedAt  time.Time `json:"createdAt"`
-	ModifiedAt time.Time `json:"updatedAt"`
+	Id         bson.ObjectId 	`bson:" json:"id"`
+	Name       string			`json:"name"`
+	Status     bool				`json:"status"`
+	Categories []string  		`bson:"categories" json:"categories"`
+	CreatedAt  time.Time 		`json:"createdAt"`
+	ModifiedAt time.Time 		`json:"updatedAt"`
 }
 
 func AllListContact() (list_contact2 []ListContact, err error) {

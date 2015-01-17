@@ -2,14 +2,13 @@ package models
 
 import (
 	"gopkg.in/mgo.v2/bson"
-	"log"
+	//"log"
 	"time"
 )
 
 type Template struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
 	Name       string        `json:"name"`
-	DesignerID bson.ObjectId `json:"designerId" bson:"designerId"`
 	Image      string        `json:"image"`
 	Content    string        `json:"content"`
 	Type       string        `json:"type"`
@@ -17,7 +16,7 @@ type Template struct {
 	CreatedAt  time.Time     `json:"createdAt"`
 	ModifiedAt time.Time     `json:"updatedAt"`
 }
-
+/*
 func GetTemplatesFromDesigner(designerID string) (templates2 []Template) {
 	templates.
 		Find(bson.M{"designerId": bson.ObjectIdHex(designerID)}).
@@ -102,3 +101,4 @@ func UpdateTemplateFromDesigner(template Template, designerID string, templateID
 		})
 	return nil, template2
 }
+*/

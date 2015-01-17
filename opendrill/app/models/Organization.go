@@ -13,25 +13,85 @@ type Organization struct {
 	Logo          string        `json:"logo"`
 	RUC           string        `json:"ruc"`
 	MandrillKey   string        `json:"mandrillKey"`
-	OrganizatorID bson.ObjectId `json:"organizatorId" bson:"organizatorId"`
+
+	Users 		  []User 		`bson:"users" json:"users"`
+	ListContacts  []ListContact `bson:"listContacts" json:"listContacts"`
+	Templates	  []Template 	`bson:"templates" json:"templates"`	
+
 	CreatedAt     time.Time     `json:"createdAt"`
 	ModifiedAt    time.Time     `json:"updatedAt"`
 }
 
-func GetOrganizationsFromOrganizator(organizatorID string) (organizations2 []Organization) {
-	organizations.
-		Find(bson.M{"organizatorId": bson.ObjectIdHex(organizatorID)}).
-		All(&organizations2)
+
+func CreateOrganization(user User) (err error, organization2 Organization) {
+	var new_organization Organization
+	user.Id = bson.NewObjectId()
+	_user := []User{user}
+	_template := []Template{}
+	_list_conatct := []ListContact{}
+
+	organization2 = new_organization
+	organization2.Users = _user
+	organization2.ListContacts = _list_conatct
+	organization2.Templates = _template
+	organization2.Name = user.UserName
+	organization2.CreatedAt = time.Now()
+	organization2.ModifiedAt = time.Now()
+	organization2.Id = bson.NewObjectId()
+	if err := organizations.Insert(organization2); err != nil {
+		return err, new_organization
+	}
+	return nil, organization2
+}
+
+func AllOrganizations() (organizations2 []Organization, err error) {
+	err = organizations.Find(nil).All(&organizations2)
 	return
 }
 
-func GetOrganizationFromOrganizator(organizatorID string, organizationID string) (err error, organization2 Organization) {
+func GetOrganization(organizationID string) (err error, organization2 Organization) {
 	err = organizations.
-		Find(bson.M{"organizatorId": bson.ObjectIdHex(organizatorID), "_id": bson.ObjectIdHex(organizationID)}).
+		Find(bson.M{"_id": bson.ObjectIdHex(organizationID)}).
 		One(&organization2)
 	return
 }
 
+
+func GetOrganizationsFromOrganizator(organizatorID string) (err error, organizations2 Organization) {
+
+	err = organizations.Find(nil).
+		  Select(bson.M{"users": bson.M{"$elemMatch": bson.M{"_id":  bson.ObjectIdHex(organizatorID)}}}).
+		  One(&organizations2)
+
+	return
+}
+
+func AddUserToOrganization(user User, organizationID string) (err error, organization2 Organization) {
+	
+	log.Println("prueba ", organizationID)
+	if err, organization := GetOrganization(organizationID); err != nil {
+		return err, organization
+	}
+	log.Println(organization)
+	/*var organizator Organizator
+	if err, organizator := GetOrganizator(organizatorID); err != nil {
+		log.Println(organizator)
+		return err, Organization{}
+	}
+	user = User
+	user.Id = bson.NewObjectId()
+	if err := organizations.Insert(organization2); err != nil {
+		return err, organization
+	}
+
+	organizators.Update(bson.M{"_id": organizator.Id},
+		bson.M{
+			"organizations": GetOrganizationsFromOrganizator(organizatorID),
+		})*/
+	return nil, organization
+}
+
+/*
 func AddOrganizationToOrganizator(organization Organization, organizatorID string) (err error, organization2 Organization) {
 	var organizator Organizator
 	if err, organizator := GetOrganizator(organizatorID); err != nil {
@@ -103,3 +163,4 @@ func UpdateOrganizationFromOrganizator(organization Organization, organizatorID 
 		})
 	return nil, organization2
 }
+*/
