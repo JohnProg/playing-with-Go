@@ -3,11 +3,19 @@ package models
 import "gopkg.in/mgo.v2/bson"
 import "time"
 
+<<<<<<< HEAD
 type Category struct{
 	Id  		bson.ObjectId 	`bson:"_id" json:"id"`
 	Name 		string			`db:"name" json:"name"`
 	Created     time.Time 		`db:"created" json:"created"`
 	Modified    time.Time 		`db:"modified" json:"modified"`
+=======
+type Category struct {
+	Id         bson.ObjectId `bson:"_id" json:"id"`
+	Name       string        `bson:"name" json:"name"`
+	CreatedAt  time.Time     `json:"createdAt"`
+	ModifiedAt time.Time     `json:"updatedAt"`
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 }
 
 func AllCategory() (category2 []Category, err error) {
@@ -25,8 +33,13 @@ func GetCategory(Id string) (err error, category Category) {
 
 func CreateCategory(category Category) (err error, category2 Category) {
 	category2 = category
+<<<<<<< HEAD
 	category2.Created = time.Now()
 	category2.Modified = time.Now()
+=======
+	category2.CreatedAt = time.Now()
+	category2.ModifiedAt = time.Now()
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 	category2.Id = bson.NewObjectId()
 
 	if err := categories.Insert(category2); err != nil {
@@ -52,13 +65,24 @@ func UpdateCategory(category Category, Id string) (err error, category2 Category
 	bid := bson.ObjectIdHex(Id)
 	err = categories.Update(bson.M{"_id": bid},
 		bson.M{
+<<<<<<< HEAD
 			"name": category2.Name,
 			"modified": time.Now(),
 			"_id":    bid,
+=======
+			"name":      category2.Name,
+			"updatedAt": time.Now(),
+			"createdAt": category2.CreatedAt,
+			"_id":       bid,
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 		})
 	if err != nil {
 		return err, category
 	}
 	category2.Id = bid
 	return nil, category2
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada

@@ -1,0 +1,35 @@
+{
+  "name": "OpenDrill",
+  "version": "0.0.0",
+  "homepage": "https://github.com/...",
+  "authors": [
+    "John Machahuay Giraldo"
+  ],
+  "description": "OpenDrill is a platform for ...",
+  "keywords": [
+    "mailing",
+    "database"
+  ],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "latest",
+    "angular-route": "latest",
+    "ionicons": "latest",
+    "jquery": "latest",
+    "js-md5": "latest",
+    "semantic-ui": "latest",
+    "normalize.css": "latest",
+    "angular-translate": "latest",
+    "angular-translate-loader-static-files": "latest",
+    "angular-translate-storage-local": "latest",
+    "angular-cookies": "latest",
+    "animate.css": "latest"
+  }
+}

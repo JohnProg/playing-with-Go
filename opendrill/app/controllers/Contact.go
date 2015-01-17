@@ -1,15 +1,13 @@
 package controllers
 
 import (
-	"github.com/gorilla/mux"
-
-	"net/http"
-	"log"
 	"encoding/json"
+	"github.com/gorilla/mux"
+	"gopkg.in/mgo.v2/bson"
+	"net/http"
 
 	models "../models"
 )
-
 
 func ListContacts(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	contacts, _ := models.AllContact()
@@ -21,23 +19,27 @@ func ListContacts(w http.ResponseWriter, r *http.Request) (interface{}, *models.
 
 func GetContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	// mux.Vars grabs variables from the path
-	Id := mux.Vars(r)["id"]
-	if len(Id) != 24 {
-		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
+	contactID := mux.Vars(r)["contactID"]
+	if !bson.IsObjectIdHex(contactID) {
+		return nil, &models.HandlerError{nil, "contactID is not valid", http.StatusBadRequest}
 	}
-	err, b := models.GetContact(Id)
+	err, b := models.GetContact(contactID)
 	if err != nil {
-		return nil, &models.HandlerError{err, "Could not find contact " + Id, http.StatusNotFound}
+		return nil, &models.HandlerError{err, "Could not find contact " + contactID, http.StatusNotFound}
 	}
 	return b, nil
 }
 
 func AddContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	var payload models.Contact
-	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+	var contact models.Contact
+	if err := json.NewDecoder(r.Body).Decode(&contact); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
+<<<<<<< HEAD
 	err, contact := models.CreateContact(payload)
+=======
+	err, contact := models.CreateContact(contact)
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not create contact ", http.StatusNotFound}
 	}
@@ -45,31 +47,38 @@ func AddContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.Ha
 }
 
 func UpdateContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	Id := mux.Vars(r)["id"]
-	if len(Id) != 24 {
-		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
+	contactID := mux.Vars(r)["contactID"]
+	if !bson.IsObjectIdHex(contactID) {
+		return nil, &models.HandlerError{nil, "contactID is not valid", http.StatusBadRequest}
 	}
-	var payload models.Contact
-	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+	var contact models.Contact
+	if err := json.NewDecoder(r.Body).Decode(&contact); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
+<<<<<<< HEAD
 	err, contact := models.UpdateContact(payload, Id)
+=======
+	err, contact := models.UpdateContact(contact, contactID)
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 	if err != nil {
-		return nil, &models.HandlerError{err, "Could not update contact " + Id + " to update", http.StatusNotFound}
+		return nil, &models.HandlerError{err, "Could not update contact " + contactID + " to update", http.StatusNotFound}
 	}
 	return contact, nil
 }
 
 func RemoveContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	Id := mux.Vars(r)["id"]
-	log.Println(Id)
-	if len(Id) != 24 {
-		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
+	contactID := mux.Vars(r)["contactID"]
+	if !bson.IsObjectIdHex(contactID) {
+		return nil, &models.HandlerError{nil, "contactID is not valid", http.StatusBadRequest}
 	}
+<<<<<<< HEAD
 	err, deleted := models.RemoveContact(Id)
+=======
+	err, deleted := models.RemoveContact(contactID)
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 
 	if err != nil {
-		return nil, &models.HandlerError{err, "Could not find contact " + Id + " to delete", http.StatusNotFound}
+		return nil, &models.HandlerError{err, "Could not find contact " + contactID + " to delete", http.StatusNotFound}
 	}
 	return deleted, nil
 }

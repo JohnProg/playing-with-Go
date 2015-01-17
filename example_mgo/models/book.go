@@ -4,11 +4,10 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// book model
 type Book struct {
 	Id     bson.ObjectId `bson:"_id" json:"id"`
-	Title  string        `json:"title"`
-	Author string        `json:"author"`
+	Title  string        `bson:"title" json:"title"`
+	Author string        `bson:"author" json:"author"`
 }
 
 func AllBooks() (books2 []Book, err error) {
