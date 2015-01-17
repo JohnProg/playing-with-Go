@@ -35,11 +35,7 @@ func AddContact(w http.ResponseWriter, r *http.Request) (interface{}, *models.Ha
 	if err := json.NewDecoder(r.Body).Decode(&contact); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-<<<<<<< HEAD
-	err, contact := models.CreateContact(payload)
-=======
 	err, contact := models.CreateContact(contact)
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not create contact ", http.StatusNotFound}
 	}
@@ -55,11 +51,7 @@ func UpdateContact(w http.ResponseWriter, r *http.Request) (interface{}, *models
 	if err := json.NewDecoder(r.Body).Decode(&contact); err != nil {
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
-<<<<<<< HEAD
-	err, contact := models.UpdateContact(payload, Id)
-=======
 	err, contact := models.UpdateContact(contact, contactID)
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not update contact " + contactID + " to update", http.StatusNotFound}
 	}
@@ -71,12 +63,7 @@ func RemoveContact(w http.ResponseWriter, r *http.Request) (interface{}, *models
 	if !bson.IsObjectIdHex(contactID) {
 		return nil, &models.HandlerError{nil, "contactID is not valid", http.StatusBadRequest}
 	}
-<<<<<<< HEAD
-	err, deleted := models.RemoveContact(Id)
-=======
 	err, deleted := models.RemoveContact(contactID)
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
-
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not find contact " + contactID + " to delete", http.StatusNotFound}
 	}

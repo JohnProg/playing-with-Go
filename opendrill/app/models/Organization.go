@@ -12,8 +12,8 @@ type Organization struct {
 	Description   string        `json:"description"`
 	Logo          string        `json:"logo"`
 	RUC           string        `json:"ruc"`
-	OrganizatorID bson.ObjectId `json:"organizatorId" bson:"organizatorId"`
 	MandrillKey   string        `json:"mandrillKey"`
+	OrganizatorID bson.ObjectId `json:"organizatorId" bson:"organizatorId"`
 	CreatedAt     time.Time     `json:"createdAt"`
 	ModifiedAt    time.Time     `json:"updatedAt"`
 }

@@ -3,17 +3,6 @@ package models
 import "gopkg.in/mgo.v2/bson"
 import "time"
 
-<<<<<<< HEAD
-type Contact struct{
-	Id 			bson.ObjectId 	`bson:"_id" json:"id"`
-	Name 		string			`db:"name" json:"name"`
-	Email 		string			`db:"email" json:"email"`
-	Categories 	[]string 		`db:"categories" json:"categories"`
-	ContactList []string 		`db:"contactlist" json:"contactlist"`
-	Created     time.Time 		`db:"created" json:"created"`
-	Modified    time.Time 		`db:"modified" json:"modified"`
-
-=======
 type Contact struct {
 	Id          bson.ObjectId `bson:"_id" json:"id"`
 	Name        string        `db:"name" json:"name"`
@@ -22,7 +11,6 @@ type Contact struct {
 	ContactList []string      `db:"contactlist" json:"contactlist"`
 	CreatedAt   time.Time     `json:"createdAt"`
 	ModifiedAt  time.Time     `json:"updatedAt"`
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 }
 
 func AllContact() (contact2 []Contact, err error) {
@@ -40,13 +28,8 @@ func GetContact(Id string) (err error, contact Contact) {
 
 func CreateContact(contact Contact) (err error, contact2 Contact) {
 	contact2 = contact
-<<<<<<< HEAD
-	contact2.Created = time.Now()
-	contact2.Modified = time.Now()
-=======
 	contact2.CreatedAt = time.Now()
 	contact2.ModifiedAt = time.Now()
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 	contact2.Id = bson.NewObjectId()
 
 	if err := contacts.Insert(contact2); err != nil {
@@ -72,14 +55,6 @@ func UpdateContact(contact Contact, Id string) (err error, contact2 Contact) {
 	bid := bson.ObjectIdHex(Id)
 	err = contacts.Update(bson.M{"_id": bid},
 		bson.M{
-<<<<<<< HEAD
-			"name": contact2.Name,
-			"email": contact2.Email,
-			"categories": contact2.Categories,
-			"contactlist": contact2.ContactList,
-			"modified": time.Now(),
-			"_id":    bid,
-=======
 			"name":        contact2.Name,
 			"email":       contact2.Email,
 			"categories":  contact2.Categories,
@@ -87,7 +62,6 @@ func UpdateContact(contact Contact, Id string) (err error, contact2 Contact) {
 			"createdAt":   contact2.CreatedAt,
 			"modifiedAt":  time.Now(),
 			"_id":         bid,
->>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada
 		})
 	if err != nil {
 		return err, contact
