@@ -2,8 +2,7 @@ package client
 
 import (
 	models "../../models"
-	"log"
-	"encoding/json"
+	//"encoding/json"
 	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"

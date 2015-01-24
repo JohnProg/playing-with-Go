@@ -23,7 +23,7 @@ func SetDB(mgoDB *mgo.Database) {
 	organizations = db.C("organizations")
 
 	indexOrganizationName := mgo.Index{
-		Key:    []string{"name", "organizationId"},
+		Key:    []string{"name", "ruc", "organizationId"},
 		Unique: true,
 	}
 	organizations.EnsureIndex(indexOrganizationName)

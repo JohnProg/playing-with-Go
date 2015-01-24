@@ -2,7 +2,6 @@ package client
 
 import (
 	models "../../models"
-	"log"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2/bson"
@@ -43,9 +42,9 @@ func AddUserToOrganzation(w http.ResponseWriter, r *http.Request) (interface{}, 
 
 func AddOrganization(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError){
 	defer r.Body.Close()
-	organizatorID := mux.Vars(r)["organizatorID"]
+	userID := mux.Vars(r)["organizatorID"]
 	
-	if !bson.IsObjectIdHex(organizatorID) {
+	if !bson.IsObjectIdHex(userID) {
 		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
 	}
 
@@ -54,7 +53,7 @@ func AddOrganization(w http.ResponseWriter, r *http.Request) (interface{}, *mode
 		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
 	}
 
-	err, organization := models.AddOrganization(organization, organizatorID)
+	err, organization := models.AddOrganization(userID, organization)
 	
 	if err != nil {
 		return organization, &models.HandlerError{err, "Could not add the organization ", http.StatusNotFound}

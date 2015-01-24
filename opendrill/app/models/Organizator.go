@@ -1,6 +1,7 @@
 package models
 
 import "gopkg.in/mgo.v2/bson"
+import "log"
 
 type Organizator struct {
 	Id            bson.ObjectId `bson:"_id" json:"id"`
@@ -8,24 +9,41 @@ type Organizator struct {
 	Organizations []Organization `bson:"organizations" json:"organizations"`
 }
 
-func GetOrganizator(organizatorID string) (err error, organizator Organizator) {
-	organization = Organizations
+func GetOrganizator(organizatorID string) (err error, user_organizator User) {
+	var organization Organization
+	var users []User
 
 	err = organizations.Find(nil).
 		  Select(bson.M{"users": bson.M{"$elemMatch": bson.M{"_id":  bson.ObjectIdHex(organizatorID)}}}).
 		  One(&organization)
 
     if err != nil{
-    	return err, organizator
+    	return err, user_organizator
     }
 
-    organizator = organization.organizator
+    users = organization.Users
+    for key := range users {
+    	if users[key].Role == ROLE_ORGANIZATOR{
+    		user_organizator = users[key]
+    	}
+    }
 
-	return nil, organizator
+	return nil, user_organizator
 }
 
-func AddOrganization(organization, organizatorID, organizatorID string)(organizators2 Organizator, err error){
+func AddOrganization(organizatorID string, organization Organization)(err error, organization2 Organization){
+	var user_organization User
 
+	err, user_organization = GetOrganizator(organizatorID)
+	if err != nil{
+		return err, organization2
+	}
+	log.Println(user_organization)
+	err, organization2 = AddOrganizationFromOrganizator(user_organization, organization)
+	if err != nil{
+		return err, organization2
+	}
+	return nil, organization2
 } 
 
 /*

@@ -30,7 +30,6 @@ func Init() {
 	router.Handle("/client/organizator/{organizatorID}/add-organization/", middleware.Handler(client.AddOrganization)).Methods("POST")
 	//Organization
 	router.Handle("/client/organization/{organizationID}/", middleware.Handler(client.GetOrganization)).Methods("GET")
-	router.Handle("/client/organization/{organizationID}/organizator/", middleware.Handler(client.GetOrganization)).Methods("GET")
 	router.Handle("/client/organization/{organizationID}/add-user/", middleware.Handler(client.AddUserToOrganzation)).Methods("POST")
 
 

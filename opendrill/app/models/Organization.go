@@ -23,9 +23,9 @@ type Organization struct {
 }
 
 
-func CreateOrganization(user User) (err error, organization2 Organization) {
+func AddOrganizationFromOrganizator(user User, organization Organization) (err error, organization2 Organization) {
 	var new_organization Organization
-	user.Id = bson.NewObjectId()
+	//user.Id = bson.NewObjectId()
 	_user := []User{user}
 	_template := []Template{}
 	_list_conatct := []ListContact{}
@@ -34,7 +34,9 @@ func CreateOrganization(user User) (err error, organization2 Organization) {
 	organization2.Users = _user
 	organization2.ListContacts = _list_conatct
 	organization2.Templates = _template
-	organization2.Name = user.UserName
+	organization2.Name = organization.Name
+	organization2.Description = organization.Description
+	organization2.RUC = organization.RUC
 	organization2.CreatedAt = time.Now()
 	organization2.ModifiedAt = time.Now()
 	organization2.Id = bson.NewObjectId()
@@ -67,8 +69,6 @@ func GetOrganizationsFromOrganizator(organizatorID string) (err error, organizat
 }
 
 func AddUserToOrganization(user User, organizationID string) (err error, organization2 Organization) {
-	
-	log.Println("prueba ", organizationID)
 	if err, organization2 := GetOrganization(organizationID); err != nil {
 		return err, organization2
 	}
