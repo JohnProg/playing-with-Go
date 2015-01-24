@@ -11,7 +11,7 @@ type ListContact struct {
 	CreatedAt  time.Time 		`json:"createdAt"`
 	ModifiedAt time.Time 		`json:"updatedAt"`
 }
-
+/*
 func AllListContact() (list_contact2 []ListContact, err error) {
 	err = list_contacts.Find(nil).All(&list_contact2)
 	return
@@ -69,3 +69,4 @@ func UpdateListContact(list_contact ListContact, Id string) (err error, list_con
 	list_contact2.Id = bid
 	return nil, list_contact2
 }
+*/

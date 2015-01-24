@@ -69,10 +69,10 @@ func GetOrganizationsFromOrganizator(organizatorID string) (err error, organizat
 func AddUserToOrganization(user User, organizationID string) (err error, organization2 Organization) {
 	
 	log.Println("prueba ", organizationID)
-	if err, organization := GetOrganization(organizationID); err != nil {
-		return err, organization
+	if err, organization2 := GetOrganization(organizationID); err != nil {
+		return err, organization2
 	}
-	log.Println(organization)
+	log.Println(organization2)
 	/*var organizator Organizator
 	if err, organizator := GetOrganizator(organizatorID); err != nil {
 		log.Println(organizator)
@@ -88,7 +88,7 @@ func AddUserToOrganization(user User, organizationID string) (err error, organiz
 		bson.M{
 			"organizations": GetOrganizationsFromOrganizator(organizatorID),
 		})*/
-	return nil, organization
+	return nil, organization2
 }
 
 /*

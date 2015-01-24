@@ -7,7 +7,7 @@ type Organizator struct {
 	User          `bson:"user" json:"user"`
 	Organizations []Organization `bson:"organizations" json:"organizations"`
 }
-
+/*
 func AllOrganizators() (organizators2 []Organizator, err error) {
 	err = organizators.
 		Find(nil).
@@ -59,3 +59,4 @@ func UpdateOrganizator(organizator Organizator, organizatorID string) (err error
 	organizator2.Id = bid
 	return nil, organizator2
 }
+*/
