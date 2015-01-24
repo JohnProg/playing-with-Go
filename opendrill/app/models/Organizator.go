@@ -7,8 +7,29 @@ type Organizator struct {
 	User          `bson:"user" json:"user"`
 	Organizations []Organization `bson:"organizations" json:"organizations"`
 }
+
+func GetOrganizator(organizatorID string) (err error, organizator Organizator) {
+	organization = Organizations
+
+	err = organizations.Find(nil).
+		  Select(bson.M{"users": bson.M{"$elemMatch": bson.M{"_id":  bson.ObjectIdHex(organizatorID)}}}).
+		  One(&organization)
+
+    if err != nil{
+    	return err, organizator
+    }
+
+    organizator = organization.organizator
+
+	return nil, organizator
+}
+
+func AddOrganization(organization, organizatorID, organizatorID string)(organizators2 Organizator, err error){
+
+} 
+
 /*
-func AllOrganizators() (organizators2 []Organizator, err error) {
+func AllOrganizators(organizator Organizator) (organizators2 []Organizator, err error) {
 	err = organizators.
 		Find(nil).
 		All(&organizators2)

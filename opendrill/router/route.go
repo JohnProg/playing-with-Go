@@ -24,13 +24,19 @@ func Init() {
 	router.Handle("/admin/organizations/", middleware.Handler(admin.ListOrganizations)).Methods("GET")
 
 	//Client
-	router.Handle("/client/{organizatorID}/organizations/", middleware.Handler(client.GetOrganizationsFromOrganizator)).Methods("GET")
+
+	//Organizator
+	router.Handle("/client/organizator/{organizatorID}/organizations/", middleware.Handler(client.GetOrganizationsFromOrganizator)).Methods("GET")
+	router.Handle("/client/organizator/{organizatorID}/add-organization/", middleware.Handler(client.AddOrganization)).Methods("POST")
+	//Organization
 	router.Handle("/client/organization/{organizationID}/", middleware.Handler(client.GetOrganization)).Methods("GET")
-	router.Handle("/client/{organizationID}/add-user/", middleware.Handler(client.AddUser)).Methods("POST")
+	router.Handle("/client/organization/{organizationID}/organizator/", middleware.Handler(client.GetOrganization)).Methods("GET")
+	router.Handle("/client/organization/{organizationID}/add-user/", middleware.Handler(client.AddUserToOrganzation)).Methods("POST")
 
 
 
 	//Category
+	//Update: db.organizations.update({name: "Mery2"}, {$set:{ruc:"123123123"}});
 	/*
 	router.Handle("/categories/", middleware.Handler(controllers.ListCategories)).Methods("GET")
 	router.Handle("/categories/", middleware.Handler(controllers.AddCategory)).Methods("POST")

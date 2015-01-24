@@ -9,18 +9,6 @@ import (
 	"net/http"
 )
 
-func GetOrganizationsFromOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
-	organizatorID := mux.Vars(r)["organizatorID"]
-	if !bson.IsObjectIdHex(organizatorID) {
-		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
-	}
-	err, organizations := models.GetOrganizationsFromOrganizator(organizatorID)
-	if err != nil {
-		return []models.Organization{}, nil
-	}
-	return organizations, nil
-}
-
 func GetOrganization(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	organizationID := mux.Vars(r)["organizationID"]
 	if !bson.IsObjectIdHex(organizationID) {
@@ -33,7 +21,7 @@ func GetOrganization(w http.ResponseWriter, r *http.Request) (interface{}, *mode
 	return organization, nil
 }
 
-func AddUser(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
+func AddUserToOrganzation(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	defer r.Body.Close()
 	organizationID := mux.Vars(r)["organizationID"]
 	
@@ -48,9 +36,28 @@ func AddUser(w http.ResponseWriter, r *http.Request) (interface{}, *models.Handl
 	err, organization := models.AddUserToOrganization(user, organizationID)
 	
 	if err != nil {
-		log.Println("Error 2")
 		return organization, &models.HandlerError{err, "Could not add the user ", http.StatusNotFound}
 	}
-	log.Println("Sin error")
+	return organization, nil
+}
+
+func AddOrganization(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError){
+	defer r.Body.Close()
+	organizatorID := mux.Vars(r)["organizatorID"]
+	
+	if !bson.IsObjectIdHex(organizatorID) {
+		return nil, &models.HandlerError{nil, "Could not parse JSON", http.StatusNotFound}
+	}
+
+	var organization models.Organization
+	if err := json.NewDecoder(r.Body).Decode(&organization); err != nil {
+		return nil, &models.HandlerError{err, "Could not parse JSON ", http.StatusNotFound}
+	}
+
+	err, organization := models.AddOrganization(organization, organizatorID)
+	
+	if err != nil {
+		return organization, &models.HandlerError{err, "Could not add the organization ", http.StatusNotFound}
+	}
 	return organization, nil
 }
