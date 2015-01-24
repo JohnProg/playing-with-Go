@@ -15,7 +15,7 @@ func GetOrganization(w http.ResponseWriter, r *http.Request) (interface{}, *mode
 	}
 	err, organization := models.GetOrganization(organizationID)
 	if err != nil {
-		return nil, &models.HandlerError{err, "Could not find organization " + organizationID, http.StatusNotFound}
+		return organization, &models.HandlerError{err, "Could not find organization " + organizationID, http.StatusNotFound}
 	}
 	return organization, nil
 }

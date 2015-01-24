@@ -52,8 +52,10 @@ func AllOrganizations() (organizations2 []Organization, err error) {
 }
 
 func GetOrganization(organizationID string) (err error, organization2 Organization) {
+
+	bid := bson.ObjectIdHex(organizationID)
 	err = organizations.
-		Find(bson.M{"_id": bson.ObjectIdHex(organizationID)}).
+		FindId(bid).
 		One(&organization2)
 	return
 }
@@ -69,6 +71,7 @@ func GetOrganizationsFromOrganizator(organizatorID string) (err error, organizat
 }
 
 func AddUserToOrganization(user User, organizationID string) (err error, organization2 Organization) {
+	log.Println("id:", organizationID)
 	if err, organization2 := GetOrganization(organizationID); err != nil {
 		return err, organization2
 	}
