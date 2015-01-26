@@ -2,6 +2,7 @@ package models
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	e "../error"
 	"log"
 	"time"
 )
@@ -22,6 +23,16 @@ type Organization struct {
 	ModifiedAt    time.Time     `json:"updatedAt"`
 }
 
+//Properties
+
+func FindId(id interface{}) Organization {
+	result := Organization{}
+	err := organizations.FindId(id).One(&result)
+	e.H(err)
+	return result
+}
+
+//Methods
 
 func AddOrganizationFromOrganizator(user User, organization Organization) (err error, organization2 Organization) {
 	var new_organization Organization
@@ -51,13 +62,14 @@ func AllOrganizations() (organizations2 []Organization, err error) {
 	return
 }
 
-func GetOrganization(organizationID string) (err error, organization2 Organization) {
+func GetOrganization(organizationID string) (err error, organization Organization) {
 
 	bid := bson.ObjectIdHex(organizationID)
 	err = organizations.
 		FindId(bid).
-		One(&organization2)
+		One(&organization)
 	return
+
 }
 
 
