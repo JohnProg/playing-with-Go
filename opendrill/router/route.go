@@ -31,11 +31,13 @@ func Init() {
 	//Organization
 	router.Handle("/client/organization/{organizationID}/", middleware.Handler(client.GetOrganization)).Methods("GET")
 	router.Handle("/client/organization/{organizationID}/add-user/", middleware.Handler(client.AddUserToOrganzation)).Methods("POST")
+	router.Handle("/client/organization/{organizationID}/delete-user/{userID}", middleware.Handler(client.DeleteUserToOrganzation)).Methods("DELETE")
 
 
 
 	//Category
 	//Update: db.organizations.update({name: "Mery2"}, {$set:{ruc:"123123123"}});
+	//db.organizations.update( {_id: ObjectId("54c3e639b71b7f1fed000002")}, {$push:{listContacts: "prueba"}} )
 	/*
 	router.Handle("/categories/", middleware.Handler(controllers.ListCategories)).Methods("GET")
 	router.Handle("/categories/", middleware.Handler(controllers.AddCategory)).Methods("POST")
