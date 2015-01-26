@@ -27,8 +27,11 @@ type Organization struct {
 
 func FindId(id interface{}) Organization {
 	result := Organization{}
+	bson.ObjectIdHex(id)
 	err := organizations.FindId(id).One(&result)
-	e.H(err)
+	if err != nil{
+		e.H(err)
+	}
 	return result
 }
 
@@ -84,6 +87,8 @@ func GetOrganizationsFromOrganizator(organizatorID string) (err error, organizat
 
 func AddUserToOrganization(user User, organizationID string) (err error, organization2 Organization) {
 	log.Println("id:", organizationID)
+	organization2 = FindId(organizationID)
+
 	if err, organization2 := GetOrganization(organizationID); err != nil {
 		return err, organization2
 	}
