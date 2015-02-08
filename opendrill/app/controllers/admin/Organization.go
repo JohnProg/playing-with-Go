@@ -1,13 +1,25 @@
-package controllers
+package admin
 
 import (
-	models "../models"
-	"encoding/json"
-	"github.com/gorilla/mux"
-	"gopkg.in/mgo.v2/bson"
+	models "../../models"
+	//"encoding/json"
+	//"github.com/gorilla/mux"
+	//"gopkg.in/mgo.v2/bson"
 	"net/http"
 )
 
+
+
+func ListOrganizations(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
+	list_organizations, _ := models.AllOrganizations()
+	if list_organizations == nil {
+		return []models.Organization{}, nil
+	}
+	return list_organizations, nil
+}
+
+
+/*
 func GetOrganizationsFromOrganizator(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
 	organizatorID := mux.Vars(r)["organizatorID"]
 	if !bson.IsObjectIdHex(organizatorID) {
@@ -81,3 +93,4 @@ func RemoveOrganizationFromOrganizator(w http.ResponseWriter, r *http.Request) (
 	}
 	return deleted, nil
 }
+*/

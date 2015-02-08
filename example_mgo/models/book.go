@@ -51,7 +51,8 @@ func UpdateBook(book Book, Id string) (err error, book2 Book) {
 	book2 = book
 	bid := bson.ObjectIdHex(Id)
 	err = books.Update(bson.M{"_id": bid},
-		bson.M{"title": book2.Title,
+		bson.M{
+			"title": book2.Title,
 			"author": book2.Author,
 			"_id":    bid,
 		})

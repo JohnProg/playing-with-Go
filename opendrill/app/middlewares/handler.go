@@ -16,7 +16,7 @@ func (fn Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// check for errors
 	if err != nil {
 		log.Printf("ERROR: %v\n", err.Error)
-		http.Error(w, fmt.Sprintf(`{"error":"%s"}`, err.Message), err.Code)
+		http.Error(w, fmt.Sprintf(`{"error":"%s", "detail": "%s"}`, err.Message, err.Error), err.Code)
 		return
 	}
 	if response == nil {

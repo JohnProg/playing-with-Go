@@ -1,6 +1,7 @@
 package models
 
 import "gopkg.in/mgo.v2/bson"
+import "log"
 
 type Organizator struct {
 	Id            bson.ObjectId `bson:"_id" json:"id"`
@@ -8,7 +9,45 @@ type Organizator struct {
 	Organizations []Organization `bson:"organizations" json:"organizations"`
 }
 
-func AllOrganizators() (organizators2 []Organizator, err error) {
+func GetOrganizator(organizatorID string) (err error, user_organizator User) {
+	var organization Organization
+	var users []User
+
+	err = organizations.Find(nil).
+		  Select(bson.M{"users": bson.M{"$elemMatch": bson.M{"_id":  bson.ObjectIdHex(organizatorID)}}}).
+		  One(&organization)
+
+    if err != nil{
+    	return err, user_organizator
+    }
+
+    users = organization.Users
+    for key := range users {
+    	if users[key].Role == ROLE_ORGANIZATOR{
+    		user_organizator = users[key]
+    	}
+    }
+
+	return nil, user_organizator
+}
+
+func AddOrganization(organizatorID string, organization Organization)(err error, organization2 Organization){
+	var user_organization User
+
+	err, user_organization = GetOrganizator(organizatorID)
+	if err != nil{
+		return err, organization2
+	}
+	log.Println(user_organization)
+	err, organization2 = AddOrganizationFromOrganizator(user_organization, organization)
+	if err != nil{
+		return err, organization2
+	}
+	return nil, organization2
+} 
+
+/*
+func AllOrganizators(organizator Organizator) (organizators2 []Organizator, err error) {
 	err = organizators.
 		Find(nil).
 		All(&organizators2)
@@ -59,3 +98,4 @@ func UpdateOrganizator(organizator Organizator, organizatorID string) (err error
 	organizator2.Id = bid
 	return nil, organizator2
 }
+*/

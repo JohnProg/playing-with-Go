@@ -1,5 +1,5 @@
 package controllers
-
+/*
 import (
 	models "../models"
 	"encoding/json"
@@ -81,3 +81,4 @@ func RemoveTemplateFromDesigner(w http.ResponseWriter, r *http.Request) (interfa
 	}
 	return deleted, nil
 }
+*/

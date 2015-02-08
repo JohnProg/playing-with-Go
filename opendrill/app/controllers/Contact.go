@@ -64,7 +64,6 @@ func RemoveContact(w http.ResponseWriter, r *http.Request) (interface{}, *models
 		return nil, &models.HandlerError{nil, "contactID is not valid", http.StatusBadRequest}
 	}
 	err, deleted := models.RemoveContact(contactID)
-
 	if err != nil {
 		return nil, &models.HandlerError{err, "Could not find contact " + contactID + " to delete", http.StatusNotFound}
 	}

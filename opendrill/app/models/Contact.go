@@ -12,7 +12,7 @@ type Contact struct {
 	CreatedAt   time.Time     `json:"createdAt"`
 	ModifiedAt  time.Time     `json:"updatedAt"`
 }
-
+/*
 func AllContact() (contact2 []Contact, err error) {
 	err = contacts.Find(nil).All(&contact2)
 	return
@@ -69,3 +69,4 @@ func UpdateContact(contact Contact, Id string) (err error, contact2 Contact) {
 	contact2.Id = bid
 	return nil, contact2
 }
+*/

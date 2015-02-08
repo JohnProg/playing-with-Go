@@ -3,13 +3,14 @@ package models
 import "gopkg.in/mgo.v2/bson"
 import "time"
 
+
 type Category struct {
 	Id         bson.ObjectId `bson:"_id" json:"id"`
 	Name       string        `bson:"name" json:"name"`
 	CreatedAt  time.Time     `json:"createdAt"`
 	ModifiedAt time.Time     `json:"updatedAt"`
 }
-
+/*
 func AllCategory() (category2 []Category, err error) {
 	err = categories.Find(nil).All(&category2)
 	return
@@ -62,4 +63,4 @@ func UpdateCategory(category Category, Id string) (err error, category2 Category
 	}
 	category2.Id = bid
 	return nil, category2
-}
+}*/

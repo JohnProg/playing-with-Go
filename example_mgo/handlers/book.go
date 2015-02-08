@@ -57,7 +57,11 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.Ha
 }
 
 func RemoveBook(w http.ResponseWriter, r *http.Request) (interface{}, *models.HandlerError) {
+<<<<<<< HEAD:opendrill/app/controllers/book.go
+	Id := mux.Vars(r)["id"]
+=======
 	Id := r.URL.Path[len("/books/"):]
+>>>>>>> e08185a76af3c54738ab1eabc6600135d2d7dada:example_mgo/handlers/book.go
 	if len(Id) != 24 {
 		return nil, &models.HandlerError{nil, "Id is not valid", http.StatusBadRequest}
 	}
