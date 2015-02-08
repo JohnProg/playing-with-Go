@@ -12,7 +12,7 @@ type Gender int
 const (
 	// Roles
 	ROLE_ORGANIZATOR = 0
-	ROLE_SUPER_ADMIN  = 1
+	ROLE_SUPER_ADMIN = 1
 	ROLE_REPORT      = 2
 	ROLE_DESIGNER    = 3
 
@@ -28,20 +28,20 @@ var (
 
 type User struct {
 	Id        bson.ObjectId `bson:"_id" json:"id"`
-	Name      string   		`json:"name"`
-	LastName  string   		`json:"lastname"`
-	UserName  string   		`json:"username"`
-	Password  string   		`json:"password"`
-	Age       int      		`json:"age"`
-	Email     string   		`json:"email"`
-	Role      UserRole 		`json:"role"`
-	DNI       int      		`json:"dni"`
-	Gender    Gender   		`json:"gender"`
-	Address   string   		`json:"address"`
-	Phone     string   		`json:"phone"`
-	CellPhone string   		`json:"cellphone"`
-	Avatar    string   		`json:"avatar"`
-	Active    bool     		`json:"active"`
+	Name      string        `json:"name"`
+	LastName  string        `json:"lastname"`
+	UserName  string        `json:"username"`
+	Password  string        `json:"password"`
+	Age       int           `json:"age"`
+	Email     string        `json:"email"`
+	Role      UserRole      `json:"type"`
+	DNI       int           `json:"dni"`
+	Gender    Gender        `json:"gender"`
+	Address   string        `json:"address"`
+	Phone     string        `json:"phone"`
+	CellPhone string        `json:"cellphone"`
+	Avatar    string        `json:"avatar"`
+	Active    bool          `json:"active"`
 }
 
 func RegisterUser(user User) (err error, organization2 Organization) {
