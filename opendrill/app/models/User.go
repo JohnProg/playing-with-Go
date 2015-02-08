@@ -2,6 +2,7 @@ package models
 
 import "gopkg.in/mgo.v2/bson"
 import "time"
+import "github.com/dgrijalva/jwt-go"
 
 // UserRole represents an user role
 type UserRole int
@@ -42,6 +43,7 @@ type User struct {
 	CellPhone string        `json:"cellphone"`
 	Avatar    string        `json:"avatar"`
 	Active    bool          `json:"active"`
+	Token     string        `json:"token"`
 }
 
 func RegisterUser(user User) (err error, organization2 Organization) {
@@ -62,5 +64,29 @@ func RegisterUser(user User) (err error, organization2 Organization) {
 	if err := organizations.Insert(organization2); err != nil {
 		return err, new_organization
 	}
+	return nil, organization2
+}
+
+func AuthUser(user User) (err error, organization2 Organization) {
+	var new_organization Organization
+
+	err = organizations.Find(nil).
+		Select(bson.M{"users": bson.M{"$elemMatch": bson.M{"username": user.UserName}}}).
+		One(&organizations2)
+
+	if err != nil {
+		return err, nil
+	}
+
+	//Set a token to user
+	jwtToken := jwt.New(jwt.SigningMethodHS256)
+	jwtToken.Claims["exp"] = time.Now().Add(time.Second * 1).Unix()
+	jwtToken.Claims["user_id"] = 321
+	jsonWebToken, err := jwtToken.SignedString(privKey)
+	if err != nil {
+		return nil, &models.HandlerError{err, "Could not parse JSON", http.StatusInternalServerError}
+	}
+	//user.token = jsonWebToken
+
 	return nil, organization2
 }

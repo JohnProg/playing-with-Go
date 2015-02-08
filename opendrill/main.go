@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+var privKey []byte
+
+func init() {
+	key, err := ioutil.ReadFile("id_rsa")
+	if err != nil {
+		log.Fatal(err)
+	}
+	privKey = key
+}
+
 func main() {
 	var configPath = "config.json"
 

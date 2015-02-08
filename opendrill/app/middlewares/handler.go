@@ -4,6 +4,7 @@ import (
 	"../models"
 	"encoding/json"
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"log"
 	"net/http"
 )
@@ -36,4 +37,18 @@ func (fn Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
 	log.Printf("%s %s %s %d", r.RemoteAddr, r.Method, r.URL, 200)
+}
+
+func JWTMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var defaultKeyFunc jwt.Keyfunc = func(*jwt.Token) (interface{}, error) {
+			return privKey, nil
+		}
+		jsonWebTokenParsed, err := jwt.Parse(r.Header.Get("jwt"), defaultKeyFunc)
+		if err != nil || !jsonWebTokenParsed.Valid {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		next(w, r)
+	}
 }
